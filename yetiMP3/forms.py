@@ -1,9 +1,12 @@
 from django import forms
 
 class YTForm(forms.Form):
-    name = forms.CharField()
-    message = forms.CharField(widget=forms.Textarea)
+    url = forms.CharField()
 
-    def send_email(self):
+    def __init__(self, *args, **kwargs):
+        super(YTForm, self).__init__(*args, **kwargs)
+        self.fields['url'].widget.attrs.update({'id':'yt_url'})
+
+    #def send_email(self):
         # send email using the self.cleaned_data dictionary
-        pass
+        #pass
