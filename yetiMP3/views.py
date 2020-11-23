@@ -16,4 +16,5 @@ class IndexView(FormView):
         # This method is called when valid form data has been POSTed.
         # It should return an HttpResponse.
         # url -> mp3
+        form.getMp3()
         return super().form_valid(form)

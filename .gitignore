@@ -1,3 +1,4 @@
 .vscode/
-yetiMP3/__pycache__/
-YTConverter/__pycache__/
+__pycache__/
+yetiMP3/storage/
+!yetiMP3/storage/.gitkeep
