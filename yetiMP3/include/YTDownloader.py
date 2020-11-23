@@ -16,14 +16,15 @@ class YTDownloader:
             try:
                 info = ydl.extract_info(uri, download=True)
                 outputname = ydl.prepare_filename(info)
+                outputname = outputname.replace(".mp4", ".mp3")
                 ydl.download([uri])
                 if new_name != "":
-                    outputname = self.renameFile(outputname.replace(".mp4", ".mp3"), new_name)
+                    outputname = self.renameFile(outputname, new_name)
             except youtube_dl.utils.SameFileError as sfe:
                 print("File già esistente: "+str(sfe))
             except youtube_dl.utils.DownloadError as de:
                 print(str(de))
-        return outputname 
+        return os.path.join(self.download_dir, outputname)
 
     def __getOptions(self) -> dict:
         opt = {

@@ -1,6 +1,7 @@
+import os
 from django.shortcuts import render
 from django.http import HttpResponse
-from .  import forms
+from . import forms
 from django.views.generic.edit import FormView
 
 # Create your views here.
@@ -16,5 +17,10 @@ class IndexView(FormView):
         # This method is called when valid form data has been POSTed.
         # It should return an HttpResponse.
         # url -> mp3
-        form.getMp3()
+        file_path = form.downloadMp3()
+        if os.path.exists(file_path):
+            with open(file_path, 'rb') as fh:
+                response = HttpResponse(fh.read(), content_type="audio/mpeg")
+                response['Content-Disposition'] = 'attachment; filename="'+os.path.basename(file_path)+'"'
+                return response
         return super().form_valid(form)

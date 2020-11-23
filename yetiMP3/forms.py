@@ -12,9 +12,9 @@ class YTForm(forms.Form):
     """
         Downloads mp3 from youtube
     """
-    def getMp3(self):
+    def downloadMp3(self):
         print("url", self.cleaned_data['url'])
         url = self.cleaned_data['url']
         yt = YTDownloader()
-        yt.download(url)
-        pass
+        file_path = yt.download(url)
+        return file_path        
