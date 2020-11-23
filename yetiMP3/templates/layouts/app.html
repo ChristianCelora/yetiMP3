@@ -17,12 +17,17 @@
     </head>
     <body>
         <div class="page-header text-center">
-            <div id="title">
-                <h1>YeTi mp3</h1>
+            <div id="title" class="container d-flex justify-content-center mt-5">
+                <div>
+                    <img src="static/img/logo.png" alt="logo" width="150" height="150"/>
+                </div>
+                <div class="my-auto">
+                    <h1>YETI mp3</h1>
+                </div>
             </div>
         </div>
 
-        <div class="content container justify-content snowflakes">
+        <div class="container justify-content-center snowflakes mt-5">
             <!-- lot of snowfalkes -->
             {% for i in "x"|rjust:"50" %} <!--iterate 0 -> 50 -->
                 <div class="snowflake">❅</div>

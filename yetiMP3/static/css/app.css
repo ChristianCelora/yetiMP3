@@ -5,3 +5,12 @@
 #yt_url {
     background-color: rgba(255, 255, 255, 0.6);
 }
+
+.transparent-text-input {
+    background-color: transparent;
+    box-shadow: none !important;
+    padding: 0 5px 0 5px;
+    border: 2px solid white;
+    border-radius: 5px;
+    height: 40px
+}

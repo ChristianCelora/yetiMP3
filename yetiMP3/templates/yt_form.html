@@ -1,12 +1,18 @@
 {% extends 'layouts/app.html' %}
 
 {% block content %}
-    <form method="post">
+    <form method="post" id="yt-form">
         {% csrf_token %}
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center row">
             <!--{{ form.as_p }}-->
-            <input type="text" name="url" id="yt_url" class="form-text" required="">
-            <input type="submit" value="download">
+            <div clss="col-6">
+                <input type="text" name="url" id="yt_url" class="transparent-text-input w-100" required="">
+            </div>
+            <!-- <input type="submit" value="download"> -->
+            <div class="btn btn-outline-dark ml-2" id="yt-form-submit">
+                Download
+            </div>
+            </div>
         </div>
     </form>
 {% endblock %}
