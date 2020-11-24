@@ -1,5 +1,8 @@
 body{
-    background:#0277bd;
+    background-image: url("../img/back_4.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color:#0277bd;
 }
 /* customizable snowflake styling */
 .snowflake {
