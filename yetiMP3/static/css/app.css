@@ -1,5 +1,5 @@
 #title{
-    color: white;
+    color: #fff;
 }
 
 #logo-text {
@@ -23,4 +23,19 @@
     border: 2px solid white;
     border-radius: 5px;
     height: 40px
+}
+
+.btn-outline-darker {
+    color: #fff;
+    background-color: #17191b;
+    background-image: none;
+    border-color: #17191b;
+    border-width: medium;
+}
+
+
+.btn-outline-darker:hover {
+    color: #17191b;
+    background-color: #9BE5F9;
+    transition: 0.5s;
 }
