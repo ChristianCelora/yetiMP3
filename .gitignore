@@ -2,3 +2,4 @@
 __pycache__/
 yetiMP3/storage/
 !yetiMP3/storage/.gitkeep
+venv/
