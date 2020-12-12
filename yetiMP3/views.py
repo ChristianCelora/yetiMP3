@@ -17,11 +17,10 @@ def download_from_yt(request):
         data = {"status": True, "name": client_name, "id": real_name}
     return JsonResponse(data)
 
-def download_mp3():
-    real_name = request.GET.get("id", None)
-    client_name = request.GET.get("name", None)
-    file_path = os.path.join(YTDownloader().download_dir, real_name+".mp3")
-    print("download", file_path)
+def download_mp3(request, id, name):
+    client_name = name + ".mp3"
+    file_path = os.path.join(YTDownloader().download_dir, id+".mp3")
+    print("download mp3", file_path)
     with open(file_path, "rb") as fh:
         response = HttpResponse(fh.read(), content_type="audio/mpeg")
         response['Content-Disposition'] = 'attachment; filename="'+os.path.basename(client_name)+'"'

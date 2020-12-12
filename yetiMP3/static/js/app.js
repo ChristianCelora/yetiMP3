@@ -21,9 +21,9 @@ $(document).ready(function(){
         }).done(function(data){
             console.log(data);
             if("status" in data && data["status"]){
-                let get_params = "id=" + data["id"] + "&name=" + encodeURIComponent(data["name"]);
-                console.log(get_params);
-                window.location = "/ajax/download/?" + get_params;
+                // let get_params = "id=" + data["id"] + "&name=" + encodeURIComponent(data["name"]);
+                // console.log(get_params);
+                window.location = "/ajax/download/" + data["id"] + "/" + encodeURIComponent(data["name"]);
             }
         });
     });
