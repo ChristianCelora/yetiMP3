@@ -10,19 +10,21 @@ from django.http import JsonResponse
 # AJAX Handlers
 def download_from_yt(request):
     url = request.POST.get('url', None)
-    real_name, client_name = YTDownloader().download(url)
-    data = {"status": False, "file": "", "id": ""}
-    if os.path.exists(real_name):
-        data = {"status": False, "file": client_name, "id": real_name}
+    ytd = YTDownloader()
+    real_name, client_name = ytd.download(url)
+    data = {"status": False, "name": "", "id": ""}
+    if os.path.exists(os.path.join(ytd.download_dir, real_name+".mp3")):
+        data = {"status": True, "name": client_name, "id": real_name}
     return JsonResponse(data)
 
-def download():
-    filename = request.GET.get("filename", None)
-    file_path = os.path.join(YTDownloader().download_dir, filename)
+def download_mp3():
+    real_name = request.GET.get("id", None)
+    client_name = request.GET.get("name", None)
+    file_path = os.path.join(YTDownloader().download_dir, real_name+".mp3")
     print("download", file_path)
     with open(file_path, "rb") as fh:
         response = HttpResponse(fh.read(), content_type="audio/mpeg")
-        response['Content-Disposition'] = 'attachment; filename="'+os.path.basename(file_path)+'"'
+        response['Content-Disposition'] = 'attachment; filename="'+os.path.basename(client_name)+'"'
         return response
 
 # Classic form handler

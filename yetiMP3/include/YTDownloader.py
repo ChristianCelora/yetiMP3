@@ -18,15 +18,15 @@ class YTDownloader:
                 real_name = info["id"]
                 outputname = ydl.prepare_filename(info).replace(".mp4", ".mp3")
                 ydl.download([uri])
-                self.renameFile(outputname, real_name)
-                if new_name != "":
-                    self.changeMp3Metadata(outputname, new_name)
+                real_path = self.renameFile(outputname, real_name)
+                # if new_name != "":
+                    # self.renameFile(outputname, new_name)
             except youtube_dl.utils.SameFileError as sfe:
                 print("File già esistente: "+str(sfe))
             except youtube_dl.utils.DownloadError as de:
                 print(str(de))
         # return os.path.join(self.download_dir, outputname)
-        return real_name, outputname
+        return real_name, info["title"]
 
     def __getOptions(self) -> dict:
         opt = {
@@ -41,9 +41,12 @@ class YTDownloader:
 
         return opt
 
-    def renameFile(self, old_path: str, name: str) -> str:
-        filepath = self.getUniqueName(name)
+    def renameFile(self, old_path: str, name: str, change_metadata = False) -> str:
+        # filepath = self.getUniqueName(name)
+        filepath = os.path.join(self.download_dir, name+".mp3")
         os.rename(old_path, filepath)
+        if change_metadata:
+            self.changeMp3Metadata(outputname, new_name)
         return name
 
     def changeMp3Metadata(self, path: str, name: str):
@@ -55,11 +58,11 @@ class YTDownloader:
             audiofile.tag.save()
 
     def getUniqueName(self, filename: str) -> str:
-        filepath = os.path.join("Download", filename+".mp3")
+        filepath = os.path.join(self.download_dir, filename+".mp3")
         # check if file alredy exist
         if os.path.exists(filepath):
             i = 1
             while os.path.exists(filepath):
-                filepath = os.path.join("Download", filename+"_"+str(i)+".mp3")
+                filepath = os.path.join(self.download_dir, filename+"_"+str(i)+".mp3")
                 i += 1
         return filepath

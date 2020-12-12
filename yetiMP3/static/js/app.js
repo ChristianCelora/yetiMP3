@@ -20,9 +20,10 @@ $(document).ready(function(){
             dataType: "json"
         }).done(function(data){
             console.log(data);
-            
             if("status" in data && data["status"]){
-                // window.location = "/ajax/download_mp3/" + data["file"]
+                let get_params = "id=" + data["id"] + "&name=" + encodeURIComponent(data["name"]);
+                console.log(get_params);
+                window.location = "/ajax/download/?" + get_params;
             }
         });
     });
