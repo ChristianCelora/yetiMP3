@@ -20,5 +20,7 @@ from . import views
 urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
     # path('', include('YTConverter.urls')),
-    path('admin/', admin.site.urls)
+    path('admin/', admin.site.urls),
+    path('ajax/download_yt/', views.download_from_yt, name='download_yt'),
+    path('ajax/download/<str:id>/<str:name>', views.download_mp3, name='download_mp3'),
 ]

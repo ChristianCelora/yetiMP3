@@ -3,11 +3,30 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from . import forms
 from django.views.generic.edit import FormView
+from yetiMP3.include.YTDownloader import YTDownloader
+from django.http import JsonResponse
 
 # Create your views here.
-def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+# AJAX Handlers
+def download_from_yt(request):
+    url = request.POST.get('url', None)
+    ytd = YTDownloader()
+    real_name, client_name = ytd.download(url)
+    data = {"status": False, "name": "", "id": ""}
+    if os.path.exists(os.path.join(ytd.download_dir, real_name+".mp3")):
+        data = {"status": True, "name": client_name, "id": real_name}
+    return JsonResponse(data)
 
+def download_mp3(request, id, name):
+    client_name = name + ".mp3"
+    file_path = os.path.join(YTDownloader().download_dir, id+".mp3")
+    print("download mp3", file_path)
+    with open(file_path, "rb") as fh:
+        response = HttpResponse(fh.read(), content_type="audio/mpeg")
+        response['Content-Disposition'] = 'attachment; filename="'+os.path.basename(client_name)+'"'
+        return response
+
+# Classic form handler
 class IndexView(FormView):
     template_name = 'yt_form.html'
     form_class = forms.YTForm
@@ -24,3 +43,5 @@ class IndexView(FormView):
                 response['Content-Disposition'] = 'attachment; filename="'+os.path.basename(file_path)+'"'
                 return response
         return super().form_valid(form)
+
+    
