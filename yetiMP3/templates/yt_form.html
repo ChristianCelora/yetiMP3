@@ -3,18 +3,25 @@
 {% block content %}
     <form method="post" id="yt-form">
         {% csrf_token %}
-        <div class="d-flex justify-content-center row">
-            <!--{{ form.as_p }}-->
-            <div class="col-8">
-                <input type="text" name="url" id="yt_url" class="transparent-text-input w-100" placeholder="https://" required>
+        <div id="yt-form-container">
+            <div class="d-flex row">
+                <!--{{ form.as_p }}-->
+                <div class="col-8 offset-1">
+                    <input type="text" name="url" id="yt_url" class="transparent-text-input w-100" placeholder="https://" required>
+                </div>
+                <!-- <input type="submit" value="download"> -->
+                <div class="btn btn-outline-darker col-2 offset-1" id="yt-form-submit" style="font-weight: bold;">
+                    Download
+                </div>
+                <!-- <div class="ml-2" id="yt-form-loading">
+                    <img src="static/img/loading.gif" height="40" width="40">
+                </div> -->
             </div>
-            <!-- <input type="submit" value="download"> -->
-            <div class="btn btn-outline-darker ml-2" id="yt-form-submit" style="font-weight: bold;">
-                Download
+            <div class="d-flex row mt-3">
+                <div class="col-8 offset-1">
+                    <input type="text" name="name" id="yt_new_name" class="transparent-text-input w-100" placeholder="File name (optional)">
+                </div>
             </div>
-            <!-- <div class="ml-2" id="yt-form-loading">
-                <img src="static/img/loading.gif" height="40" width="40">
-            </div> -->
         </div>
         <div class="justify-content-center row" id="yt-form-loading">
             <div class="mx-auto" >

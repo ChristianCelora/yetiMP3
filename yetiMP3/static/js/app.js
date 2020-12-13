@@ -10,8 +10,7 @@ $(document).ready(function(){
         // should be AJAX call 
         // $("#yt-form").submit()
         $("#yt-form-loading").show();
-        $("#yt-form-submit").hide();
-        $("#yt_url").hide();
+        $("#yt-form-container").hide();
         var url = $("#yt_url").val();
         validateUrl(url);
         $.ajax({
@@ -19,7 +18,8 @@ $(document).ready(function(){
             method: "POST",
             data: {
                 "csrfmiddlewaretoken": $("input[name=csrfmiddlewaretoken]").val(),
-                "url": url
+                "url": url,
+                "name": $("#yt_new_name").val()
             },
             dataType: "json"
         }).done(function(data){
@@ -30,8 +30,7 @@ $(document).ready(function(){
                 window.location = "/ajax/download/" + data["id"] + "/" + encodeURIComponent(data["name"]);
             }
             $("#yt-form-loading").hide();
-            $("#yt-form-submit").show();
-            $("#yt_url").show();
+            $("#yt-form-container").show();
         });
     });
 });

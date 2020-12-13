@@ -9,9 +9,10 @@ from django.http import JsonResponse
 # Create your views here.
 # AJAX Handlers
 def download_from_yt(request):
-    url = request.POST.get('url', None)
+    url = request.POST.get("url", None)
+    new_name = request.POST.get("name", "")
     ytd = YTDownloader()
-    real_name, client_name = ytd.download(url)
+    real_name, client_name = ytd.download(url, new_name)
     data = {"status": False, "name": "", "id": ""}
     if os.path.exists(os.path.join(ytd.download_dir, real_name+".mp3")):
         data = {"status": True, "name": client_name, "id": real_name}

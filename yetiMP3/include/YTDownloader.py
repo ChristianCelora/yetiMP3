@@ -16,17 +16,21 @@ class YTDownloader:
             try:
                 info = ydl.extract_info(uri, download=True)
                 real_name = info["id"]
+                client_name = info["title"]
                 outputname = ydl.prepare_filename(info).replace(".mp4", ".mp3")
                 ydl.download([uri])
+                
+                if new_name != "":
+                    self.changeMp3Metadata(outputname, new_name)
+                    client_name = new_name
                 real_path = self.renameFile(outputname, real_name)
-                # if new_name != "":
-                    # self.renameFile(outputname, new_name)
+
             except youtube_dl.utils.SameFileError as sfe:
                 print("File già esistente: "+str(sfe))
             except youtube_dl.utils.DownloadError as de:
                 print(str(de))
         # return os.path.join(self.download_dir, outputname)
-        return real_name, info["title"]
+        return real_name, client_name
 
     def __getOptions(self) -> dict:
         opt = {
@@ -41,12 +45,11 @@ class YTDownloader:
 
         return opt
 
-    def renameFile(self, old_path: str, name: str, change_metadata = False) -> str:
+    def renameFile(self, old_path: str, name: str) -> str:
         # filepath = self.getUniqueName(name)
         filepath = os.path.join(self.download_dir, name+".mp3")
         os.rename(old_path, filepath)
-        if change_metadata:
-            self.changeMp3Metadata(outputname, new_name)
+        
         return name
 
     def changeMp3Metadata(self, path: str, name: str):
@@ -57,12 +60,12 @@ class YTDownloader:
             audiofile.tag.title = title.strip()
             audiofile.tag.save()
 
-    def getUniqueName(self, filename: str) -> str:
-        filepath = os.path.join(self.download_dir, filename+".mp3")
-        # check if file alredy exist
-        if os.path.exists(filepath):
-            i = 1
-            while os.path.exists(filepath):
-                filepath = os.path.join(self.download_dir, filename+"_"+str(i)+".mp3")
-                i += 1
-        return filepath
+    # def getUniqueName(self, filename: str) -> str:
+    #     filepath = os.path.join(self.download_dir, filename+".mp3")
+    #     # check if file alredy exist
+    #     if os.path.exists(filepath):
+    #         i = 1
+    #         while os.path.exists(filepath):
+    #             filepath = os.path.join(self.download_dir, filename+"_"+str(i)+".mp3")
+    #             i += 1
+    #     return filepath
