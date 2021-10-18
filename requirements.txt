@@ -13,5 +13,5 @@ pyparsing==2.4.7
 pytz==2020.4
 six==1.15.0
 sqlparse==0.4.1
-youtube-dl==2021.4.26
+youtube-dl==2021.6.6
 whitenoise==5.2.0
