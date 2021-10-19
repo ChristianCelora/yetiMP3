@@ -31,6 +31,9 @@ $(document).ready(function(){
             }
             $("#yt-form-loading").hide();
             $("#yt-form-container").show();
+        }).fail(function(xhr, textStatus, error){
+            var err = eval("(" + xhr.responseText + ")");
+            alert(err.Message);
         });
     });
 });
