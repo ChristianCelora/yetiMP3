@@ -1,10 +1,10 @@
 import os
 from django.shortcuts import render
-from django.http import HttpResponse
 from . import forms
+from django.forms.models import model_to_dict 
 from django.views.generic.edit import FormView
+from django.http import HttpResponse, JsonResponse
 from yetiMP3.include.YTDownloader import YTDownloader
-from django.http import JsonResponse
 from yetiMP3.tasks import download_yt_mp3
 
 from yetiMP3.models import Task
@@ -38,6 +38,17 @@ def download_from_yt_async(request):
         data = {"status": False, "task_id": ""}
 
     return JsonResponse(data)
+
+def check_task(request):
+    task_id = request.POST.get("task_id", None)
+    if task_id != None:
+        task = Task.objects.get(id=task_id)
+        data = {"status": True, "task": model_to_dict(task)}
+    else:
+        data = {"status": False}
+
+    return JsonResponse(data)
+
 
 def download_mp3(request, id, name):
     client_name = name + ".mp3"

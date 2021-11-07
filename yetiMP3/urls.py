@@ -23,5 +23,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('ajax/download_yt/', views.download_from_yt, name='download_yt'),
     path('ajax/async/download_yt/', views.download_from_yt_async, name='async/download_yt'),
+    path('ajax/async/check_task/', views.check_task, name='async/check_task'),
     path('ajax/download/<str:id>/<str:name>', views.download_mp3, name='download_mp3'),
 ]

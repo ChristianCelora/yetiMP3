@@ -11,6 +11,7 @@ class YTDownloader:
 
     def download(self, uri: str, new_name="") -> str:
         outputname = ""
+        real_name = ""
         ydl_opts = self.__getOptions()
         with YoutubeDL(ydl_opts) as ydl:
             try:
