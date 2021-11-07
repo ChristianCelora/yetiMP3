@@ -5,6 +5,7 @@ from . import forms
 from django.views.generic.edit import FormView
 from yetiMP3.include.YTDownloader import YTDownloader
 from django.http import JsonResponse
+from yetiMP3.tasks import download_yt_mp3
 
 # Create your views here.
 # AJAX Handlers
@@ -16,6 +17,22 @@ def download_from_yt(request):
     data = {"status": False, "name": "", "id": ""}
     if os.path.exists(os.path.join(ytd.download_dir, real_name+".mp3")):
         data = {"status": True, "name": client_name, "id": real_name}
+    return JsonResponse(data)
+
+def download_from_yt_async(request):
+    url = request.POST.get("url", None)
+    new_name = request.POST.get("name", "")
+    try:
+    # make unique id 
+        task_unique_id = 1
+        # add task to queue
+        ret = download_yt_mp3.delay(url, new_name)
+        print("task added to queue")
+        print(ret)
+        data = {"status": True, "task_id": ret}
+    except Exception as e:
+        data = {"status": False, "task_id": ""}
+
     return JsonResponse(data)
 
 def download_mp3(request, id, name):

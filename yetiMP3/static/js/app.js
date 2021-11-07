@@ -14,7 +14,8 @@ $(document).ready(function(){
         var url = $("#yt_url").val();
         validateUrl(url);
         $.ajax({
-            url: "/ajax/download_yt/",
+            //url: "/ajax/download_yt/",
+            url: "/ajax/async/download_yt/",
             method: "POST",
             data: {
                 "csrfmiddlewaretoken": $("input[name=csrfmiddlewaretoken]").val(),
@@ -32,8 +33,7 @@ $(document).ready(function(){
             $("#yt-form-loading").hide();
             $("#yt-form-container").show();
         }).fail(function(xhr, textStatus, error){
-            var err = eval("(" + xhr.responseText + ")");
-            alert(err.Message);
+            console.log(xhr);
         });
     });
 });
