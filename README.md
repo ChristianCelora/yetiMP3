@@ -12,3 +12,10 @@ $ python manage.py runserver 8080
 ```
 
 Use python 3.6! For now...
+
+## Tech used
+
+- Django
+- Redis
+- SQLite3
+- Heroku

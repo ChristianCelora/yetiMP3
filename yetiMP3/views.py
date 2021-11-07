@@ -7,6 +7,8 @@ from yetiMP3.include.YTDownloader import YTDownloader
 from django.http import JsonResponse
 from yetiMP3.tasks import download_yt_mp3
 
+from yetiMP3.models import Task
+
 # Create your views here.
 # AJAX Handlers
 def download_from_yt(request):
@@ -26,10 +28,12 @@ def download_from_yt_async(request):
     # make unique id 
         task_unique_id = 1
         # add task to queue
-        ret = download_yt_mp3.delay(url, new_name)
+        task = Task(status = 0)
+        task.save()
+        ret = download_yt_mp3.delay(url, new_name, task.id)
         print("task added to queue")
         print(ret)
-        data = {"status": True, "task_id": ret}
+        data = {"status": True, "task_id": task.id}
     except Exception as e:
         data = {"status": False, "task_id": ""}
 
