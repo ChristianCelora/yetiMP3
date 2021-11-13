@@ -5,7 +5,7 @@ from celery import Celery
 # Set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'yetiMP3.settings')
 
-broker_url = os.environ.get('QUEUE_BROKER_URL', 'redis://localhost:6379//')
+broker_url = os.environ.get('REDIS_URL', 'redis://localhost:6379//')
 app = Celery('yetiMP3', broker=broker_url)
 
 # Using a string here means the worker doesn't have to serialize
