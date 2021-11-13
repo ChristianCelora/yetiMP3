@@ -1,4 +1,4 @@
-var max_times = 20;
+var max_times = 30;
 var delta_ms = 5000;
 
 $(document).ready(function(){

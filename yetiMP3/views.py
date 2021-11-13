@@ -22,7 +22,6 @@ def download_from_yt(request):
     return JsonResponse(data)
 
 def download_from_yt_async(request):
-    print(os.environ.get('REDIS_URL', 'redis://localhost:6379//'))
     url = request.POST.get("url", None)
     new_name = request.POST.get("name", "")
     try:
@@ -31,9 +30,7 @@ def download_from_yt_async(request):
         # add task to queue
         task = Task(status = 0)
         task.save()
-        ret = download_yt_mp3.delay(url, new_name, task.id)
-        print("task added to queue")
-        print(ret)
+        download_yt_mp3.delay(url, new_name, task.id)
         data = {"status": True, "task_id": task.id}
     except Exception as e:
         data = {"status": False, "task_id": ""}
