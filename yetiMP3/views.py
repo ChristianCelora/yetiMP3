@@ -22,6 +22,7 @@ def download_from_yt(request):
     return JsonResponse(data)
 
 def download_from_yt_async(request):
+    print(os.environ.get('REDIS_URL', 'redis://localhost:6379//'))
     url = request.POST.get("url", None)
     new_name = request.POST.get("name", "")
     try:
