@@ -3,7 +3,8 @@ from django.shortcuts import render
 from . import forms
 from django.forms.models import model_to_dict 
 from django.views.generic.edit import FormView
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.urls import reverse, resolve
 from yetiMP3.include.YTDownloader import YTDownloader
 from yetiMP3.tasks import download_yt_mp3
 
@@ -52,10 +53,17 @@ def download_mp3(request, id, name):
     client_name = name + ".mp3"
     file_path = os.path.join(YTDownloader().download_dir, id+".mp3")
     print("download mp3", file_path)
-    with open(file_path, "rb") as fh:
-        response = HttpResponse(fh.read(), content_type="audio/mpeg")
-        response['Content-Disposition'] = 'attachment; filename="'+os.path.basename(client_name)+'"'
-        return response
+    try:
+        with open(file_path, "rb") as fh:
+            response = HttpResponse(fh.read(), content_type="audio/mpeg")
+            response['Content-Disposition'] = 'attachment; filename="'+os.path.basename(client_name)+'"'
+    except FileNotFoundError:
+        response = HttpResponseRedirect(reverse('index'))
+    return response
+
+def redirect_index(request):
+    response = HttpResponseRedirect(reverse('index'))
+    return response
 
 # Classic form handler
 class IndexView(FormView):
