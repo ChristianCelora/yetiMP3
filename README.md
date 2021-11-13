@@ -3,7 +3,10 @@
 
 Django App to download music from YouTube.
 
-## run application 
+## Dev notes
+Use python 3.6! For now...
+
+### run application 
 ```
 $ python --version
 Python 3.6.x
@@ -11,7 +14,16 @@ $ source venv/bin/activate
 $ python manage.py runserver 8080
 ```
 
-Use python 3.6! For now...
+### start redis
+```
+redis server
+```
+
+### start celery worker
+```
+celery -A yetiMP3 worker -l info
+```
+
 
 ## Tech used
 
